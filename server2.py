@@ -6,6 +6,7 @@ import sqlite3
 from time import time
 import secrets
 import http.cookies
+import mysql.connector
 
 # Define the port as varible
 HOST = "0.0.0.0"
