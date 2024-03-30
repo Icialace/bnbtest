@@ -23,7 +23,12 @@ class Block:
         return hashlib.sha256((str(self.index) + str(self.timestamp) + str(self.vote) + str(self.previous_hash)).encode()).hexdigest()
 
 class CustomHandler(SimpleHTTPRequestHandler):
-    db_connection = sqlite3.connect('user_database.db')
+    db_connection = mysql.connector.connect(
+        host="bnbtest-server.mysql.database.azure.com",
+        user="pekrjprvlw",
+        password="A58E3J2V80SE4004$",
+        database="blockchain"
+        ssl-mode="require"
     db_cursor = db_connection.cursor()
 
     def __init__(self, *args, **kwargs):
@@ -31,9 +36,19 @@ class CustomHandler(SimpleHTTPRequestHandler):
 
         CustomHandler.db_cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT UNIQUE,
-                password TEXT
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            username VARCHAR(255) UNIQUE,
+            password VARCHAR(255)
+            )
+        ''')
+        CustomHandler.db_cursor.execute('''
+            CREATE TABLE IF NOT EXISTS blockchain (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            index INT,
+            timestamp INT,
+            vote VARCHAR(255),
+            previous_hash VARCHAR(64),
+            hash VARCHAR(64)
             )
         ''')
         CustomHandler.db_connection.commit()
