@@ -27,8 +27,7 @@ class CustomHandler(SimpleHTTPRequestHandler):
         host="bnbtest-server.mysql.database.azure.com",
         user="pekrjprvlw",
         password="A58E3J2V80SE4004$",
-        database="blockchain"
-        ssl-mode="require"
+        database="users"
     db_cursor = db_connection.cursor()
 
     def __init__(self, *args, **kwargs):
